@@ -44,6 +44,8 @@ int main() {
   while (token != NULL) { // lops through all tokens until no more are left
 
     printf("  %s\n", token); // gets the next token from the same string
+    token = strtok_r(NULL, " ", &saveptr); // Get next token
+    
   }
 
   free(buffer); // frees the memory allocated by getline to prevent memory leaks
