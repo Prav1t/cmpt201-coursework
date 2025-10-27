@@ -54,7 +54,7 @@ void insert_sorted(uint64_t data) {
       curr = curr->next;
     }
     
-    // If we reached the end without inserting, add at the tail
+    // If we reached the end without inserting, adds at the tail
     if (!inserted) {
       prev->next = new_node;
     }
@@ -77,44 +77,30 @@ int index_of(uint64_t data) {
   return -1;
 }
 
-// Helper function to print list for debugging
-void print_list() {
-  node_t *curr = head;
-  printf("List: ");
-  while (curr != NULL) {
-    printf("%lu ", curr->data);
-    curr = curr->next;
-  }
-  printf("\n");
-}
-
 int main() {
   insert_sorted(1);
   insert_sorted(2);
   insert_sorted(5);
   insert_sorted(3);
 
-  print_list(); // Debug: see the list state
   TEST(index_of(3) == 2);
 
   insert_sorted(0);
   insert_sorted(4);
 
-  print_list(); // Debug: see the list state
   TEST(index_of(4) == 4);
 
-  printf("All tests passed!\n");
   return 0;
-}
+} 
 
-
+//now for example_2.c
 
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #define ASSERT(expr)                                                           
-  {                                                                            
+  {                                                                           
     if (!(expr)) {                                                             
       fprintf(stderr, "Assertion failed at %s:%d: %s\n", __FILE__, __LINE__, #expr); 
       exit(1);                                                                 
@@ -124,9 +110,9 @@ int main() {
 #define TEST(expr)                                                             
   {                                                                            
     if (!(expr)) {                                                             
-      fprintf(stderr, "Test failed: %s\n", #expr);                             
+      fprintf(stderr, "Test failed: %s\n", #expr);                            
       exit(1);                                                                 
-    }                                                                         
+    }                                                                          
   }
 
 typedef struct node {
@@ -141,8 +127,8 @@ typedef struct info {
 node_t *head = NULL;
 info_t info = {0};
 
-// Function to calculate sum by iterating through the list
-uint64_t calculate_sum() {
+// Function which iterates through the list and returns the sum of all elements
+uint64_t calculate_list_sum() {
   uint64_t sum = 0;
   node_t *curr = head;
   while (curr != NULL) {
@@ -176,7 +162,7 @@ void insert_sorted(uint64_t data) {
     }
 
     prev->next = new_node;
-    new_node->next = curr;  // Fixed: was curr->next
+    new_node->next = curr;  //fixed the bug here
   }
 
   info.sum += data;
@@ -198,35 +184,17 @@ int index_of(uint64_t data) {
   return -1;
 }
 
-// Helper function to print the list for debugging
-void print_list() {
-  node_t *curr = head;
-  printf("List: ");
-  while (curr != NULL) {
-    printf("%lu ", curr->data);
-    curr = curr->next;
-  }
-  printf("\n");
-}
-
 int main() {
   insert_sorted(1);
   insert_sorted(3);
   insert_sorted(5);
   insert_sorted(2);
 
-  // Debug: print the list to see what we have
-  print_list();
-  printf("Info sum: %lu\n", info.sum);
-  printf("Calculated sum: %lu\n", calculate_sum());
-
-  // Assertions to verify correctness
-  ASSERT(info.sum == calculate_sum());
-  ASSERT(index_of(2) == 1);
+  
+  ASSERT(info.sum == calculate_list_sum());
   
   TEST(info.sum == 1 + 3 + 5 + 2);
   TEST(index_of(2) == 1);
 
-  printf("All tests passed!\n");
   return 0;
 }
